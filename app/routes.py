@@ -1,6 +1,6 @@
 from werkzeug.urls import url_parse
 
-from app import app,db
+from app import app, db
 from flask import render_template, flash, redirect, url_for, request
 from app.forms import LoginForm, RegistrationForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -11,7 +11,6 @@ from app.models import User
 @app.route('/index')
 # @login_required
 def index():
-    # user = {'username': 'Miguel'}  #用户
     posts = [ #帖子
         {
             'author': {'username':'John'},  # 用户信息
