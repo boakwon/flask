@@ -1,5 +1,7 @@
 import os
 
+from flask_marshmallow import fields, Schema
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
@@ -7,3 +9,14 @@ class Config:
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or 'sqlite:///' + os.path.join(basedir, 'data.sqlite')  # 数据库
     SQLALCHEMY_COMMIT_ON_TEARDOWN = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_COMMIT_TEARDOWN = True
+
+    FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
+    FLASKY_MAIL_SENDER = 'Flasky Admin <flasky@example.com>'
+    FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
+
+
+class UserSchema(Schema):
+    username = fields.String()
+    email = fields.Email()
