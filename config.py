@@ -1,6 +1,5 @@
 import os
 
-from flask_marshmallow import fields, Schema
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -16,7 +15,3 @@ class Config:
     FLASKY_MAIL_SENDER = 'Flasky Admin <flasky@example.com>'
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
 
-
-class UserSchema(Schema):
-    username = fields.String()
-    email = fields.Email()

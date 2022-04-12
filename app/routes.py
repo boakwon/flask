@@ -4,24 +4,19 @@ from app import app, db
 from flask import render_template, flash, redirect, url_for, request
 from app.forms import LoginForm, RegistrationForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User,Role,Post
+from app.schema import UserSchema, user_schema
 
 
 @app.route('/')
 @app.route('/index')
 # @login_required
 def index():
-    posts = [ #帖子
-        {
-            'author': {'username':'John'},  # 用户信息
-            'body': 'Beautiful day im Portland'  # 发表内容
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avergers movie was so cool'
-        }
-    ]
+    posts =Post.query.all() #帖子
+    # result = user_schema.dump(posts)
+    # return {"authors": result}
     return render_template('index.html', tltle='home',  posts=posts)
+
 
 
 @app.route('/login', methods=['GET','POST'])
