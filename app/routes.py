@@ -3,9 +3,8 @@ from werkzeug.urls import url_parse
 from app import app, db
 from flask import render_template, flash, redirect, url_for, request
 from app.forms import LoginForm, RegistrationForm
-from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User,Role,Post
-from app.schema import UserSchema, user_schema
+from flask_login import current_user, login_user, logout_user
+from app.models import User, Post
 
 
 @app.route('/')

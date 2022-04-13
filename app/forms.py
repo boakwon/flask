@@ -24,6 +24,7 @@ class RegistrationForm(FlaskForm):
     password2 = PasswordField('Confirm password', validators=[DataRequired()])
     submit = SubmitField('Register')
 
+    # 唯一性
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('Email already registered.')

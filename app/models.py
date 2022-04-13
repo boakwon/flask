@@ -29,7 +29,7 @@ class Role(db.Model):
             self.permissions = 0
 
     @staticmethod
-    def insert_roles():
+    def insert_roles():  # 在数据库中创建角色
         roles = {
             'User': [Permission.FOLLOW, Permission.COMMENT, Permission.WRITE],  # 1+2+4=7
             'Moderator': [Permission.FOLLOW, Permission.COMMENT, Permission.WRITE, Permission.MODERATE],
@@ -40,8 +40,6 @@ class Role(db.Model):
             role = Role.query.filter_by(name=r).first()
             if role is None:
                 role = Role(name=r)
-            # role.permissions = roles[r][0]
-            # role.default = roles[r][1]
             role.reset_permissions()
             for perm in roles[r]:
                 role.add_permission(perm)
@@ -68,9 +66,6 @@ class Role(db.Model):
         return '<Role %r>' % self.name
 
 
-@login_manager.user_loader
-def load_user(id):
-    return User.query.get(int(id))
 
 
 # 用户
@@ -83,6 +78,7 @@ class User(UserMixin, db.Model):
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
+    # 定义默认的用户角色
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
         if self.role is None:
@@ -90,9 +86,6 @@ class User(UserMixin, db.Model):
                 self.role = Role.query.filter_by(name='Administrator').first()
             if self.role is None:
                 self.role = Role.query.filter_by(default=True).first()
-        # if self.email is not None and self.avatar_hash is None:
-        #     self.avatar_hash = self.gravatar_hash()
-        # self.follow(self)
 
 
     @property
@@ -125,6 +118,11 @@ class AnonymousUser(AnonymousUserMixin):
         return False
 
 login_manager.anonymous_user = AnonymousUser
+
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 
 class Post(db.Model):

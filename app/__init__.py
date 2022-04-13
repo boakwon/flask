@@ -19,6 +19,6 @@ login_manager = LoginManager(app)
 
 ma = Marshmallow(app)
 
-
+app.app_context().push()
 
 from app import routes, models
