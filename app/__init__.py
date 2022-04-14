@@ -21,4 +21,4 @@ ma = Marshmallow(app)
 
 app.app_context().push()
 
-from app import routes, models
+from app import routes, models, errors

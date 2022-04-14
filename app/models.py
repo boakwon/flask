@@ -66,8 +66,6 @@ class Role(db.Model):
         return '<Role %r>' % self.name
 
 
-
-
 # 用户
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -125,6 +123,7 @@ def load_user(id):
     return User.query.get(int(id))
 
 
+# 帖子
 class Post(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)

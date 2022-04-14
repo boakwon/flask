@@ -3,13 +3,13 @@ import pytest
 
 
 def test_password_setter():
-        u = User(password='cat')
-        assert u.password_hash is not None
+    u = User(password='cat')
+    assert u.password_hash is not None
 
 
 def test_no_password_getter():
     u = User(password='cat')
-    with pytest.raises (AttributeError):
+    with pytest.raises(AttributeError):
         u.password
 
 
@@ -52,6 +52,7 @@ def test_administrator_role():
     assert u.can(Permission.MODERATE) == True
     assert u.can(Permission.ADMIN) == True
 
+
 def test_anonymous_user():
     u = AnonymousUser()
     assert u.can(Permission.FOLLOW) == False
@@ -61,6 +62,5 @@ def test_anonymous_user():
     assert u.can(Permission.ADMIN) == False
 
 
-
 if __name__ == '__main__':
-    pytest.main(['-s','test_user_model.py'])
+    pytest.main(['test_user_model.py'])
